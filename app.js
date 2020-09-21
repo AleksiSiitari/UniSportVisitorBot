@@ -16,6 +16,7 @@ server.listen(port, hostname, () => {
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
+bot.on('/start', (msg) => msg.reply.text('Welcome!'));
 bot.on('/kluuvi', (msg) => {
   return msg.reply.photo('https://unisport.fi/sites/default/files/styles/content_image_l/public/media/images/Viikko%2038%20-%20Kluuvi.jpg?itok=7ne4C-jt/get');
 });
