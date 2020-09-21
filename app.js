@@ -2,7 +2,7 @@ const http = require('http');
 const TeleBot = require('telebot');
 
 const hostname = '0.0.0.0';
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
