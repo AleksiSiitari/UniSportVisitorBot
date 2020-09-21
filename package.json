@@ -1,0 +1,22 @@
+{
+  "name": "unisportvisitorbot",
+  "version": "0.0.1",
+  "description": "Unisport visitor data telegram bot",
+  "main": "app.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleksiSiitari/UniSportVisitorBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AleksiSiitari/UniSportVisitorBot/issues"
+  },
+  "homepage": "https://github.com/AleksiSiitari/UniSportVisitorBot#readme",
+  "dependencies": {
+    "telebot": "^1.4.1"
+  }
+}
