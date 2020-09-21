@@ -1,5 +1,4 @@
 const http = require('http');
-const config = require('./config');
 const TeleBot = require('telebot');
 
 const hostname = '127.0.0.1';
@@ -15,7 +14,7 @@ server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-const bot = new TeleBot(config.TELEGRAM_BOT_TOKEN);
+const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.on('/kluuvi', (msg) => {
   return msg.reply.photo('https://unisport.fi/sites/default/files/styles/content_image_l/public/media/images/Viikko%2038%20-%20Kluuvi.jpg?itok=7ne4C-jt/get');
