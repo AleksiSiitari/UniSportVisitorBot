@@ -32,3 +32,5 @@ bot.on('/otaniemi', (msg) => {
 bot.on('/toolo', (msg) => {
   return msg.reply.photo('https://unisport.fi/sites/default/files/styles/content_image_l/public/media/images/Viikko%2038%20-%20T%C3%B6%C3%B6l%C3%B6.jpg?itok=NfR4-zlT/get');
 });
+
+bot.start();
