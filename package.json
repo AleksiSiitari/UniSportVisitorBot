@@ -4,7 +4,8 @@
   "description": "Unisport visitor data telegram bot",
   "main": "app.js",
   "scripts": {
-    "test": ""
+    "test": "",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/AleksiSiitari/UniSportVisitorBot#readme",
   "dependencies": {
+    "axios": "^0.20.0",
+    "cheerio": "^1.0.0-rc.3",
     "telebot": "^1.4.1"
   }
 }

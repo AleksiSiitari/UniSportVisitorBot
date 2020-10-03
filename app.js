@@ -1,8 +1,12 @@
 const http = require('http');
 const TeleBot = require('telebot');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 const hostname = '0.0.0.0';
 const port = process.env.PORT || 3000;
+
+cache = {htmlData: undefined, lastUpdated: undefined};
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
@@ -13,6 +17,46 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+function isCacheAlive() {
+  if (cache.htmlData && cache.lastUpdated) {
+    timeDiff = new Date() - cache.lastUpdated;
+    if (timeDiff < 86400000) { //86400000 is 1 day in milliseconds
+      return true;
+    }
+  }
+  return false;
+};
+
+async function getUnisportHTMLData() {
+  if (isCacheAlive()) {
+    return cache.htmlData;
+  }
+
+  let htmlData;
+  axios.get('https://unisport.fi/kavijamaarat')
+    .then(function (response) {
+      htmlData = response.data;
+      cache.htmlData = htmlData;
+      cache.lastUpdated = new Date();
+    })
+    .catch(function (error) {
+      // handle error
+    })
+    .then(function () {
+      // always executed
+    });
+
+  return htmlData;
+};
+
+function parseURL(htmlData) {
+  urls = {kluuvi: "", kumpula: "", meilahti: "", otaniemi: "", toolo: ""};
+  const $ = cheerio.load(htmlData);
+  // TODO: Parse the image urls here
+
+  return urls;
+};
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
