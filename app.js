@@ -34,19 +34,19 @@ const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.on('/start', (msg) => msg.reply.text('Welcome!'));
 bot.on('/kluuvi', (msg) => {
-  return msg.reply.photo(createImageURL("Kluuvi"));
+  return msg.reply.photo(createImageURL("Kluuvi"), {caption: `Kluuvi, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/kumpula', (msg) => {
-  return msg.reply.photo(createImageURL("Kumpula"));
+  return msg.reply.photo(createImageURL("Kumpula"), {caption: `Kumpula, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/meilahti', (msg) => {
-  return msg.reply.photo(createImageURL("Meilahti"));
+  return msg.reply.photo(createImageURL("Meilahti"), {caption: `Meilahti, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/otaniemi', (msg) => {
-  return msg.reply.photo(createImageURL("Otaniemi"));
+  return msg.reply.photo(createImageURL("Otaniemi"), {caption: `Otaniemi, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/toolo', (msg) => {
-  return msg.reply.photo(createImageURL("Töölö"));
+  return msg.reply.photo(createImageURL("Töölö"), {caption: `Töölö, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 
 bot.start();
