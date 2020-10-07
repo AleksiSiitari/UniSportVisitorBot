@@ -25,7 +25,7 @@ Date.prototype.getWeekNumber = function(){
 
 function createImageURL(location) {
   // TODO: The images are not usually updated in time so we would need a to fallback on previous weeks data
-  const currentWeek = (new Date).getWeekNumber();
+  const currentWeek = (new Date).getWeekNumber() - 1; //Data is always from the previous week
   let url = `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${currentWeek}%20-%20${location}.jpg`;
   return url;
 };
