@@ -46,19 +46,19 @@ const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.on('/start', (msg) => msg.reply.text('Welcome!'));
 bot.on('/kluuvi', (msg) => {
-  return msg.reply.photo(createImageURL("Kluuvi"), {caption: `Kluuvi, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  return msg.reply.photo(createImageURL("Kluuvi"), {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/NVoVkKrgP3RdPX3H9">Kluuvi</a>, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/kumpula', (msg) => {
-  return msg.reply.photo(createImageURL("Kumpula"), {caption: `Kumpula, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  return msg.reply.photo(createImageURL("Kumpula"), {caption: `Kumpula, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/meilahti', (msg) => {
-  return msg.reply.photo(createImageURL("Meilahti"), {caption: `Meilahti, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  return msg.reply.photo(createImageURL("Meilahti"), {caption: `Meilahti, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/otaniemi', (msg) => {
-  return msg.reply.photo(createImageURL("Otaniemi"), {caption: `Otaniemi, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  return msg.reply.photo(createImageURL("Otaniemi"), {caption: `Otaniemi, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 bot.on('/toolo', (msg) => {
-  return msg.reply.photo(createImageURL("Töölö"), {caption: `Töölö, number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  return msg.reply.photo(createImageURL("Töölö"), {caption: `Töölö, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
 });
 
 bot.start();
