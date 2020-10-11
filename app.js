@@ -46,19 +46,29 @@ const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.on('/start', (msg) => msg.reply.text('Welcome!'));
 bot.on('/kluuvi', (msg) => {
-  return msg.reply.photo(createImageURL("Kluuvi"), {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/NVoVkKrgP3RdPX3H9">Kluuvi</a>, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  createImageURL("Kluuvi").then(result =>
+    msg.reply.photo(result, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/NVoVkKrgP3RdPX3H9">Kluuvi</a>, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
+  );
 });
 bot.on('/kumpula', (msg) => {
-  return msg.reply.photo(createImageURL("Kumpula"), {caption: `Kumpula, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  createImageURL("Kumpula").then(result =>
+    msg.reply.photo(result, {caption: `Kumpula, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
+  );
 });
 bot.on('/meilahti', (msg) => {
-  return msg.reply.photo(createImageURL("Meilahti"), {caption: `Meilahti, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  createImageURL("Meilahti").then(result =>
+    msg.reply.photo(result, {caption: `Meilahti, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
+  );
 });
 bot.on('/otaniemi', (msg) => {
-  return msg.reply.photo(createImageURL("Otaniemi"), {caption: `Otaniemi, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  createImageURL("Otaniemi").then(result =>
+    msg.reply.photo(result, {caption: `Otaniemi, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
+  );
 });
 bot.on('/toolo', (msg) => {
-  return msg.reply.photo(createImageURL("Töölö"), {caption: `Töölö, average number of visitors on week ${(new Date).getWeekNumber() - 1}`});
+  createImageURL("Töölö").then(result =>
+    msg.reply.photo(result, {caption: `Töölö, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
+  );
 });
 
 bot.start();
