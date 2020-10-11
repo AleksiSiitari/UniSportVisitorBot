@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/AleksiSiitari/UniSportVisitorBot#readme",
   "dependencies": {
+    "node-fetch": "^2.6.1",
     "telebot": "^1.4.1"
   }
 }

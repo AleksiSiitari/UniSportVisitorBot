@@ -1,5 +1,6 @@
 const http = require('http');
 const TeleBot = require('telebot');
+const fetch = require('node-fetch');
 
 const hostname = '0.0.0.0';
 const port = process.env.PORT || 3000;
@@ -23,11 +24,22 @@ Date.prototype.getWeekNumber = function(){
   return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
 };
 
-function createImageURL(location) {
-  // TODO: The images are not usually updated in time so we would need a to fallback on previous weeks data
-  const currentWeek = (new Date).getWeekNumber() - 1; //Data is always from the previous week
-  let url = `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${currentWeek}%20-%20${location}.jpg`;
-  return url;
+async function createImageURL(location) {
+  const lastWeek = (new Date).getWeekNumber(); //- 1;
+  const url = `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${lastWeek}%20-%20${location}.jpg`;
+  
+  fetchResults = await fetch(url, { method: 'HEAD' })
+    .then(res => {
+          if (res.ok) {
+              return url;
+          } else {
+            const weekBeforeLastWeek = lastWeek - 1; //Try to fallback to previous weeks data
+            return `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${weekBeforeLastWeek}%20-%20${location}.jpg`;
+          }
+      })
+      .catch(err => console.log('Error:', err));
+
+  return fetchResults;
 };
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
