@@ -25,19 +25,24 @@ Date.prototype.getWeekNumber = function(){
 };
 
 async function createImageURL(location) {
-  const lastWeek = (new Date).getWeekNumber(); //- 1;
+  const lastWeek = (new Date).getWeekNumber() - 1;
   const url = `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${lastWeek}%20-%20${location}.jpg`;
   
   fetchResults = await fetch(url, { method: 'HEAD' })
     .then(res => {
           if (res.ok) {
-              return url;
+              return {url: url, week: lastWeek};
           } else {
             const weekBeforeLastWeek = lastWeek - 1; //Try to fallback to previous weeks data
-            return `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${weekBeforeLastWeek}%20-%20${location}.jpg`;
+            return {url: `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${weekBeforeLastWeek}%20-%20${location}.jpg`,
+              week: weekBeforeLastWeek};
           }
       })
-      .catch(err => console.log('Error:', err));
+      .catch(err => {
+        const weekBeforeLastWeek = lastWeek - 1; //Try to fallback to previous weeks data
+        return {url: `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${weekBeforeLastWeek}%20-%20${location}.jpg`,
+          week: weekBeforeLastWeek};
+      });
 
   return fetchResults;
 };
@@ -47,28 +52,38 @@ const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 bot.on('/start', (msg) => msg.reply.text('Welcome!'));
 bot.on('/kluuvi', (msg) => {
   createImageURL("Kluuvi").then(result =>
-    msg.reply.photo(result, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/NVoVkKrgP3RdPX3H9">Kluuvi</a>, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
-  );
+    msg.reply.photo(result.url, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/NVoVkKrgP3RdPX3H9">Kluuvi</a>, average number of visitors on week ${result.week}`})
+  ).catch(err => {
+    msg.reply.text('There was an error fetching the data', { asReply: true });
+  });
 });
 bot.on('/kumpula', (msg) => {
   createImageURL("Kumpula").then(result =>
-    msg.reply.photo(result, {caption: `Kumpula, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
-  );
+    msg.reply.photo(result.url, {caption: `Kumpula, average number of visitors on week ${result.week}`})
+  ).catch(err => {
+    msg.reply.text('There was an error fetching the data', { asReply: true });
+  });
 });
 bot.on('/meilahti', (msg) => {
   createImageURL("Meilahti").then(result =>
-    msg.reply.photo(result, {caption: `Meilahti, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
-  );
+    msg.reply.photo(result.url, {caption: `Meilahti, average number of visitors on week ${result.week}`})
+  ).catch(err => {
+    msg.reply.text('There was an error fetching the data', { asReply: true });
+  });
 });
 bot.on('/otaniemi', (msg) => {
   createImageURL("Otaniemi").then(result =>
-    msg.reply.photo(result, {caption: `Otaniemi, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
-  );
+    msg.reply.photo(result.url, {caption: `Otaniemi, average number of visitors on week ${result.week}`})
+  ).catch(err => {
+    msg.reply.text('There was an error fetching the data', { asReply: true });
+  });
 });
 bot.on('/toolo', (msg) => {
   createImageURL("Töölö").then(result =>
-    msg.reply.photo(result, {caption: `Töölö, average number of visitors on week ${(new Date).getWeekNumber() - 1}`})
-  );
+    msg.reply.photo(result.url, {caption: `Töölö, average number of visitors on week ${result.week}`})
+  ).catch(err => {
+    msg.reply.text('There was an error fetching the data', { asReply: true });
+  });
 });
 
 bot.start();
