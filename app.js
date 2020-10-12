@@ -59,28 +59,28 @@ bot.on('/kluuvi', (msg) => {
 });
 bot.on('/kumpula', (msg) => {
   createImageURL("Kumpula").then(result =>
-    msg.reply.photo(result.url, {caption: `Kumpula, average number of visitors on week ${result.week}`})
+    msg.reply.photo(result.url, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/qL9QJDmoCao5QC3RA">Kumpula</a>, average number of visitors on week ${result.week}`})
   ).catch(err => {
     msg.reply.text('There was an error fetching the data', { asReply: true });
   });
 });
 bot.on('/meilahti', (msg) => {
   createImageURL("Meilahti").then(result =>
-    msg.reply.photo(result.url, {caption: `Meilahti, average number of visitors on week ${result.week}`})
+    msg.reply.photo(result.url, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/rBPzmgTxq19bxXvy7">Meilahti</a>, average number of visitors on week ${result.week}`})
   ).catch(err => {
     msg.reply.text('There was an error fetching the data', { asReply: true });
   });
 });
 bot.on('/otaniemi', (msg) => {
   createImageURL("Otaniemi").then(result =>
-    msg.reply.photo(result.url, {caption: `Otaniemi, average number of visitors on week ${result.week}`})
+    msg.reply.photo(result.url, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/dHomZdpwQh4Ccx1R9">Otaniemi</a>, average number of visitors on week ${result.week}`})
   ).catch(err => {
     msg.reply.text('There was an error fetching the data', { asReply: true });
   });
 });
 bot.on('/toolo', (msg) => {
   createImageURL("Töölö").then(result =>
-    msg.reply.photo(result.url, {caption: `Töölö, average number of visitors on week ${result.week}`})
+    msg.reply.photo(result.url, {{parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/xvdqyP29ZAWDa6ae7">Töölö</a>, average number of visitors on week ${result.week}`})
   ).catch(err => {
     msg.reply.text('There was an error fetching the data', { asReply: true });
   });
