@@ -80,7 +80,7 @@ bot.on('/otaniemi', (msg) => {
 });
 bot.on('/toolo', (msg) => {
   createImageURL("Töölö").then(result =>
-    msg.reply.photo(result.url, {{parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/xvdqyP29ZAWDa6ae7">Töölö</a>, average number of visitors on week ${result.week}`})
+    msg.reply.photo(result.url, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/xvdqyP29ZAWDa6ae7">Töölö</a>, average number of visitors on week ${result.week}`})
   ).catch(err => {
     msg.reply.text('There was an error fetching the data', { asReply: true });
   });
