@@ -79,7 +79,8 @@ bot.on('/otaniemi', (msg) => {
   });
 });
 bot.on('/toolo', (msg) => {
-  createImageURL("Töölö").then(result =>
+  // Töölö -> T%C3%B6%C3%B6l%C3%B6
+  createImageURL("T%C3%B6%C3%B6l%C3%B6").then(result =>
     msg.reply.photo(result.url, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/xvdqyP29ZAWDa6ae7">Töölö</a>, average number of visitors on week ${result.week}`})
   ).catch(err => {
     msg.reply.text('There was an error fetching the data', { asReply: true });
