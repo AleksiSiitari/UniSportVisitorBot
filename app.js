@@ -26,7 +26,7 @@ Date.prototype.getWeekNumber = function(){
 
 async function createImageURL(location) {
   const lastWeek = (new Date).getWeekNumber() - 1;
-  const url = `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${lastWeek}%20-%20${location}.jpg`;
+  const url = `https://unisport.fi/sites/default/files/styles/content_image_2xl/public/media/images/Viikko%20${lastWeek}%20-%20${encodeURI(location)}.jpg`;
   
   fetchResults = await fetch(url, { method: 'HEAD' })
     .then(res => {
@@ -79,8 +79,7 @@ bot.on('/otaniemi', (msg) => {
   });
 });
 bot.on('/toolo', (msg) => {
-  // Töölö -> T%C3%B6%C3%B6l%C3%B6
-  createImageURL("T%C3%B6%C3%B6l%C3%B6").then(result =>
+  createImageURL("Töölö").then(result =>
     msg.reply.photo(result.url, {parseMode: 'HTML', caption: `<a href="https://goo.gl/maps/xvdqyP29ZAWDa6ae7">Töölö</a>, average number of visitors on week ${result.week}`})
   ).catch(err => {
     msg.reply.text('There was an error fetching the data', { asReply: true });
