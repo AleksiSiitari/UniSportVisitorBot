@@ -28,7 +28,7 @@ const url = (locationName, weekNumber) => `https://www.unisport.fi/sites/default
 
 // https://stackoverflow.com/questions/6117814/get-week-of-year-in-javascript-like-in-php
 // eslint-disable-next-line no-extend-native
-Date.prototype.getWeekNumber = () => {
+Date.prototype.getWeekNumber = function getWeekNumber() {
   const d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
   const dayNum = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - dayNum);
@@ -49,11 +49,7 @@ const createImageURL = async (locationName) => {
     return { url: url(locationName, lastWeek), week: lastWeek };
   }
   const weekBeforeLastWeek = lastWeek - 1;
-  const secondFetchResults = await fetch(url(locationName, weekBeforeLastWeek), { method: 'HEAD' });
-  if (secondFetchResults.ok) {
-    return { url: url(locationName, weekBeforeLastWeek), week: weekBeforeLastWeek };
-  }
-  throw Error;
+  return { url: url(locationName, weekBeforeLastWeek), week: weekBeforeLastWeek };
 };
 
 const reply = async (msg, location) => {
@@ -61,17 +57,19 @@ const reply = async (msg, location) => {
     const result = await createImageURL(location.name);
     msg.reply.photo(result.url, { parseMode: 'HTML', caption: `<a href="${location.mapLink}">${location.name}</a>, average number of visitors on week ${result.week}` });
   } catch (error) {
+    console.log(new Error(error));
     msg.reply.text('There was an error fetching the data', { asReply: true });
   }
 };
 
-const replyWithRealtimeData = async (msg, locationName) => {
+const replyWithRealtimeData = async (msg, location) => {
   try {
-    const data = await getRealtimeData(locationName);
+    const data = await getRealtimeData(location.name.toLowerCase());
     const { realtime, predictions } = data;
-    msg.reply.text(`At the gym now: ${realtime.total.object_count}/${realtime.total.estimated_capacity}.
-      Predicted capacity ${predictions[1].title}: ${predictions[1].percent}, ${predictions[2].title}: ${predictions[2].percent}`, { asReply: true });
+    const jsonPredictions = JSON.parse(predictions);
+    msg.reply.text(`At the gym now: ${realtime.total.object_count}/${realtime.total.estimated_capacity}. Predicted capacity after ${jsonPredictions[1].title}: ${jsonPredictions[1].percent}, ${jsonPredictions[2].title}: ${jsonPredictions[2].percent}.`, { asReply: true });
   } catch (error) {
+    console.log(new Error(error));
     msg.reply.text('There was an error fetching the realtime data', { asReply: true });
   }
 };
@@ -79,7 +77,7 @@ const replyWithRealtimeData = async (msg, locationName) => {
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.on('/start', (msg) => msg.reply.text('Welcome!'));
-bot.on('/kluuvi', (msg) => replyWithRealtimeData(msg, 'kluuvi'));
+bot.on('/kluuvi', (msg) => replyWithRealtimeData(msg, locations.kluuvi));
 bot.on('/kumpula', (msg) => reply(msg, locations.kumpula));
 bot.on('/meilahti', (msg) => reply(msg, locations.meilahti));
 bot.on('/otaniemi', (msg) => reply(msg, locations.otaniemi));
