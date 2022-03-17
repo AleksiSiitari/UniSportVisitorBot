@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "",
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,10 @@
   "dependencies": {
     "node-fetch": "^2.6.1",
     "telebot": "^1.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
   }
 }
